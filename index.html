@@ -3,73 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Rose Day</title>
-
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
-
+    <title>Romantic Animated Text</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
+
         body {
-            background-color:#eaa9a4;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            flex-direction: column;
-            font-family: 'Dancing Script', cursive;
+            background-color: #ffe6f2;
+            font-family: 'Patrick Hand', cursive;
             text-align: center;
+            position: relative;
             overflow: hidden;
         }
-
-        h1 {
-            font-size: 3.5rem;
-            color: #d63f69;
-            opacity: 0;
-            transform: scale(0.8);
-            transition: opacity 1.5s ease-in-out, transform 1.5s ease-in-out;
+        h2{
+            color: #ff4d88;
         }
 
-        .image-container {
-            width: 350px; /* Adjust size as needed */
-            height: 400px;
-            background: #fff;
-            border-radius: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            
-            margin-top: 5px;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 1.5s ease-in-out, transform 1.5s ease-in-out;
+        .container {
+            max-width: 600px;
+            background: white;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 2;
         }
 
-        .image-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 10px;
+        #text {
+            font-size: 24px;
+            color: #ff4d88;
+            line-height: 1.5;
+            white-space: pre-line;
         }
 
+        /* Heart Animations */
+        .heart {
+            position: absolute;
+            color: #ff4d88;
+            font-size: 20px;
+            animation: float 1s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            50% { transform: translateY(-50px) scale(1.2); opacity: 0.7; }
+            100% { transform: translateY(-100px) scale(1); opacity: 0; }
+        }
     </style>
 </head>
 <body>
 
-    <h1 id="text">Happy Rose Day Baby 🌹</h1>
-
-    <!-- Space to Add Image -->
-    <div class="image-container" id="imageBox">
-        <img src="rosse.jpeg" alt="Your Image Here">
+    <div class="container">
+        <h2>Hey Pookie ❤️</h2>
+        <p id="text"></p>
     </div>
 
     <script>
-        window.onload = function () {
-            document.getElementById("text").style.opacity = "1";
-            document.getElementById("text").style.transform = "scale(1)";
+        const text = " I’ve been thinking a lot about us lately, and I can’t help but smile every time I do. You’ve become my best friend and the one who makes my heart race like no one else can. I love how we can laugh about the silliest things and have the deepest conversations. Will you be my partner in my every ups and down, in my every adventure and the person I come home to at the end of every day?I love you more than words can say, and I can’t wait to see where forever takes us💕💍";
+        let index = 0;
 
-            document.getElementById("imageBox").style.opacity = "1";
-            document.getElementById("imageBox").style.transform = "translateY(0)";
+        function typeWriter() {
+            if (index < text.length) {
+                document.getElementById("text").innerHTML += text.charAt(index);
+                index++;
+                setTimeout(typeWriter, 50);
+            }
+        }
+
+        // Start typing animation
+        window.onload = () => {
+            typeWriter();
+            generateHearts();
         };
+
+        // Function to create floating hearts
+        function generateHearts() {
+            const emojis = ["❤️", "💍", "💕", "💋", "🥺", "🫀", "✨"]; // Array of emojis
+
+            setInterval(() => {
+                const heart = document.createElement("div");
+                heart.innerHTML = emojis[Math.floor(Math.random() * emojis.length)]; // Random emoji
+                heart.classList.add("heart");
+                document.body.appendChild(heart);
+
+                let size = Math.random() * 20 + 10;
+                heart.style.fontSize = `${size}px`;
+                heart.style.left = `${Math.random() * 100}vw`;
+                heart.style.top = `${Math.random() * 100}vh`;
+                heart.style.animationDuration = `${Math.random() * 2 + 3}s`;
+
+                setTimeout(() => {
+                    heart.remove();
+                }, 3000);
+            }, 500);
+        }
     </script>
 
 </body>
